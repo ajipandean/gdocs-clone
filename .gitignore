@@ -1,0 +1,37 @@
+### ui ###
+ui/.DS_*
+ui/*.log
+ui/logs
+ui/**/*.backup.*
+ui/**/*.back.*
+
+ui/node_modules
+ui/bower_components
+
+ui/*.sublime*
+
+ui/psd
+ui/thumb
+ui/sketch
+
+### api ###
+# compiled output
+api/dist
+api/node_modules
+
+# Logs
+api/logs
+api/*.log
+api/npm-debug.log*
+api/yarn-debug.log*
+api/yarn-error.log*
+api/lerna-debug.log*
+
+# OS
+api/.DS_Store
+
+api/coverage
+api/.nyc_output
+
+api/.env
+api/.env.*
