@@ -5,6 +5,10 @@ const io = require('socket.io')(3001, {
   },
 })
 
-io.on('connection', () => {
+io.on('connection', socket => {
   console.log('Connected')
+
+  socket.on('send_delta', delta => {
+    socket.broadcast.emit('receive_changes', delta)
+  }) 
 })

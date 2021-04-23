@@ -6,22 +6,38 @@ import 'quill/dist/quill.snow.css'
 import './style.css'
 
 export default function Editor () {
+  const [socket, setSocket] = useState()
   const [quill, setQuill] = useState()
   const constants = useConstants()
 
   useEffect(() => {
-    const socket = io('http://localhost:3001')
+    const s = io('http://localhost:3001')
+    setSocket(s)
 
     return () => {
-      socket.disconnect()
+      s.disconnect()
     }
   }, [])
 
   useEffect(() => {
-    if (quill == null) return
+    if (socket == null || quill == null) return
+
+    const handler = (delta) => {
+      quill.updateContents(delta)
+    }
+    socket.on('receive_changes', handler)
+
+    return () => {
+      socket.off('receive_changes', handler)
+    }
+  }, [socket, quill])
+
+  useEffect(() => {
+    if (socket == null || quill == null) return
 
     const handleTextChange = (delta, _, source) => {
       if (source !== 'user') return
+      socket.emit('send_delta', delta)
       console.log(delta)
     }
     quill.on('text-change', handleTextChange)
@@ -29,7 +45,7 @@ export default function Editor () {
     return () => {
       quill.off('text-change', handleTextChange)
     }
-  }, [quill])
+  }, [socket, quill])
 
   const editorRef = useCallback(wrapper => {
     if (wrapper == null) return
