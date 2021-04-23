@@ -1,7 +1,10 @@
-const express = require('express')
+const io = require('socket.io')(3001, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST'],
+  },
+})
 
-const app = express()
-
-app.get('/', () => console.log('Welcome to API'))
-
-app.listen(3001, () => console.log('Server running on 3001'))
+io.on('connection', () => {
+  console.log('Connected')
+})

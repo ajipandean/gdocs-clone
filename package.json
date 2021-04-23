@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "concurrently": "^6.0.2"
+  },
+  "scripts": {
+    "start": "concurrently \"yarn start:ui\" \"yarn start:api\"",
+    "start:ui": "cd ./ui && yarn start",
+    "start:api": "cd ./api && yarn start"
+  }
+}

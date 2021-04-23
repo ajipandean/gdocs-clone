@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import Quill from 'quill'
+import { io } from 'socket.io-client'
 import useConstants from '../../hooks/useConstants'
 import 'quill/dist/quill.snow.css'
 import './style.css'
@@ -7,6 +8,14 @@ import './style.css'
 export default function Editor () {
   const [quill, setQuill] = useState()
   const constants = useConstants()
+
+  useEffect(() => {
+    const socket = io('http://localhost:3001')
+
+    return () => {
+      socket.disconnect()
+    }
+  }, [])
 
   useEffect(() => {
     if (quill == null) return
