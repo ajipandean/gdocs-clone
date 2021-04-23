@@ -1,3 +1,5 @@
+node_modules
+
 ### ui ###
 ui/.DS_*
 ui/*.log
